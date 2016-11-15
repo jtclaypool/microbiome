@@ -1,6 +1,11 @@
 #'
 #' #Read in biom file and return relative abundance
 read.biom<-function(biom="biom"){
+  #for eventually
+  taxon=biom$ConsensusLineage
+  taxon=do.call("rbind",strsplit(as.character(taxon),';'))
+  taxon=data.frame(apply(taxon,2,as.character))
+  names(taxon)=c("Kingdom","Phylum","Class","Order","Family","Genus","Species")
   #remove singletons and OTU's with no counts
   biom[biom==1]<-0
   biom.trim=biom[-(which(rowSums(biom)==0)),]
