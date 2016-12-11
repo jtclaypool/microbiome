@@ -8,7 +8,9 @@
   (if not already done)
   <br/><br/>
   
-  ``` install.packages("devtools") ```
+  ```javascript 
+  install.packages("devtools")
+  ```
   
   <br/><br/>
   
