@@ -1,4 +1,4 @@
-# microbiome
+#Microbiome package and usage
 <p>
   This is a sample workflow for several microbial community analysis
 </p>
@@ -8,7 +8,7 @@
   (if not already done)
   <br/><br/>
   
-  ```javascript 
+  ``` 
   install.packages("devtools")
   ```
   
@@ -29,5 +29,5 @@
   ```
 </p>
 
-<h1>#Generic Workflow</h1>
+#Generic Workflow
 
