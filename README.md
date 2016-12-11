@@ -8,17 +8,14 @@ First thing first though. Lets install the package.
 
 (if not already done)
 
-<br/>
   
 ``` 
 install.packages("devtools")
 ```
 
-<br/>
 
 Once installed, you'll need to use that package to install this one.
 
-<br/>
 
 ```
 library(devtools)
