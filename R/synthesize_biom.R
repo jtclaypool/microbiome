@@ -85,17 +85,17 @@ all.sparcc.trim=delete.vertices(ig.all.sparcc,igraph::degree(ig.all.sparcc)<1)
 #all_sparcc_fast=infomap.community(all.sparcc.trim,nb.trials = 100)
 plot(all.sparcc.trim)
 #Adapted from Correlation Detection Strategies.... S. Weiss et al
-mutual <- function(otu1, otu2, strength){
+#mutual <- function(otu1, otu2, strength){
   #   '''Increase abundance of otu1 and otu2 when both are present.
   #Models interaction type 'mutualism' where otus increase in abundance when
   #both are present. Strength of increase proportional to the abundance of the
   #other otu.'''
-  tmp = vstack((otu1, otu2))
-  tmp2 = tmp.all(axis=0) #check both present
-  motu1 = where(tmp2 == True, otu1+otu2*strength, otu1)
-  motu2 = where(tmp2 == True, otu2+otu1*strength, otu2)
-  return(motu1, motu2)
-}
+  #tmp = vstack((otu1, otu2))
+  #tmp2 = tmp.all(axis=0) #check both present
+  #motu1 = where(tmp2 == True, otu1+otu2*strength, otu1)
+  #motu2 = where(tmp2 == True, otu2+otu1*strength, otu2)
+  #return(motu1, motu2)
+#}
 
 
 for i in range(30): # no base otu to skip
