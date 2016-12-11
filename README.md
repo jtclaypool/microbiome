@@ -7,13 +7,24 @@
   <br/>
   (if not already done)
   <br/><br/>
-  ```install.packages("devtools")```
+  
+  ``` install.packages("devtools") ```
+  
   <br/><br/>
-  Once installed, you'll need to use that package to install this one. .
+  
+  Once installed, you'll need to use that package to install this one.
+  
   <br/><br/>
-  ```library(devtools)```
+  
+  ```
+  library(devtools)
+  ```
+  
   <br/>
-  ```install_github("jtclaypool/microbiome")```
+  
+  ```
+  install_github("jtclaypool/microbiome")
+  ```
 </p>
 
 <h1>#Generic Workflow</h1>
