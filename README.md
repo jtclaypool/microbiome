@@ -2,31 +2,29 @@
 
 This is a sample workflow for several microbial community analysis
 <br/><br/>
+
 First thing first though. Lets install the package.
 <br/>
+
 (if not already done)
-<br/><br/>
+
+<br/>
   
 ``` 
 install.packages("devtools")
 ```
 
-<br/><br/>
+<br/>
 
 Once installed, you'll need to use that package to install this one.
-
-<br/><br/>
-
-```
-library(devtools)
-```
 
 <br/>
 
 ```
+library(devtools)
 install_github("jtclaypool/microbiome")
 ```
-</p>
+
 
 #Generic Workflow
 
