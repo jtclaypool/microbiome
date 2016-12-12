@@ -28,7 +28,5 @@ read.biom<-function(biom="biom",new=T){
   per.trial=sweep(biom.trim,2,col.sums,"/")
   per.trial=as.data.frame(t(per.trial)*100)
 
-  #remove rows that never account for more than 0.5% of a sample
-  per.trial.trim=per.trial[,apply(per.trial,2,max)>.5]
   return(list("RA.Otus"=per.trial.trim,"taxon"=taxon,"biom_tab"=biom_tab))
 }
