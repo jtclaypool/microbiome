@@ -25,3 +25,11 @@ install_github("jtclaypool/microbiome")
 
 #Generic Workflow
 
+This will guide you through:
+1. Reading data
+2. Producing relative abundance graphs (or data for exporting)
+3. Exporting data
+4. Finding coocurrence data
+5. Creating networks
+6. Exporting networks to Gephi
+7. 

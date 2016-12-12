@@ -1,7 +1,7 @@
 #'
 #' #Read in biom file and return relative abundance
 read.biom<-function(biom="biom",new=T){
-  if(new){biom <- read.table(biom,header=T,sep="\t",comment.char="",skip=1)
+  if(new){biom <- read.table(biom,header=T,sep="\t",comment.char="",skip=1)}
   #taxonomy and OTU information
   taxon=biom$ConsensusLineage
   taxon=do.call("rbind",strsplit(as.character(taxon),';'))
@@ -16,7 +16,12 @@ read.biom<-function(biom="biom",new=T){
 
   #remove singletons and OTU's with no counts
   biom[biom==1]<-0
+  taxon=taxon[-(which(rowSums(biom)==0)),]
   biom.trim=biom[-(which(rowSums(biom)==0)),]
+
+  #create general tab-delimited file with taxonomy attached
+  biom_tab=cbind.data.frame(biom.trim,taxon[,-1])
+
 
   #Convert to relative abundance
   col.sums=apply(biom.trim,2,sum)
@@ -25,5 +30,5 @@ read.biom<-function(biom="biom",new=T){
 
   #remove rows that never account for more than 0.5% of a sample
   per.trial.trim=per.trial[,apply(per.trial,2,max)>.5]
-  return(list("RA.Otus"=per.trial.trim,"taxon"=taxon))
+  return(list("RA.Otus"=per.trial.trim,"taxon"=taxon,"biom_tab"=biom_tab))
 }
