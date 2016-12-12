@@ -1,6 +1,7 @@
 #'
 #' #Read in biom file and return relative abundance
-read.biom<-function(biom="biom"){
+read.biom<-function(biom="biom",new=T){
+  if(new){biom <- read.table(biom,header=T,sep="\t",comment.char="",skip=1)
   #taxonomy and OTU information
   taxon=biom$ConsensusLineage
   taxon=do.call("rbind",strsplit(as.character(taxon),';'))
