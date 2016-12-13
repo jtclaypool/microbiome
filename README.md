@@ -97,8 +97,10 @@ So this is the basic works, but getting into some of the network development, wh
 <br/>
 There are several ways to produce co-occurrence networks. 
 
-*Pearson Correlations - generate linear relationship between OTU's. This means organisms have to increase and decrease at the same rate to become captured in the network. This can be of relative abundance, raw counts, or transformed data (generally centered-log-transformed)
-*Spearman Correlations - generate rank-based relationships between OTU's. This allows data to increase or decrease together but isn't restricted to linear relationships. This again can be relative abundance, raw counts, or transformed data (generally centered-log-transformed). 
-* Other novel programs exist but will be outside the scope of this package
+-Pearson Correlations - generate linear relationship between OTU's. This means organisms have to increase and decrease at the same rate to become captured in the network. This can be of relative abundance, raw counts, or transformed data (generally centered-log-transformed)
+
+-Spearman Correlations - generate rank-based relationships between OTU's. This allows data to increase or decrease together but isn't restricted to linear relationships. This again can be relative abundance, raw counts, or transformed data (generally centered-log-transformed). 
+
+- Other novel programs exist but will be outside the scope of this package
   * SparCC
   * Spiec-Easi (Speak-easy)
