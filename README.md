@@ -58,7 +58,7 @@ biom=read.biom(filepath, new=T)
 filepath=file.choose()
 meta=read.table(filepath,header=T,sep="\t")
 ```
-
+##Simple Relative Abundance
 Here we can make our generic barplot of relative abundance. We can also then transform it into something fancier!
 
 ```r
@@ -74,13 +74,14 @@ ra_plot$RA_plot+
   labs(title="Enrichment of microbial communities\non Douglas Fir")
 ```
 
+###Export Data
 If we don't want to make this graph in R but want to save ourselves some time, we can export the relative abundance data for use in a spreadsheet program. 
 
 ```r
 #this will write it to your current working directory. The name in quotations will be the final name of the file
 write.table(ra_plot$top_wide,"RA table.txt", sep="\t",row.names = T)
 ```
-
+##Community Metrics
 There is a code that does a "wrapper" for VEGAN in R. It will compute various statistics such as NMDS, Shannon's Diversity, and Pielou's Evenness
 
 ```r
@@ -92,7 +93,7 @@ veg$NMDS_plot+
   guides(fill=guide_legend("Timepoint"))+
   labs(title="Enrichment of microbial communities\non Douglas Fir")
 ```
-
+##Microbial Community Networks
 So this is the basic works, but getting into some of the network development, what we are trying to extract is how our microbial community is interacting. 
 <br/>
 There are several ways to produce co-occurrence networks. 
@@ -102,3 +103,22 @@ There are several ways to produce co-occurrence networks.
 - Other novel programs exist but will be outside the scope of this package
   * SparCC
   * Spiec-Easi (Speak-easy)
+
+Some people will use rarefied counts but this removes data and [recent studies](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531) suggest NOT to do this.
+<br/>
+So here, we will use relative abundance to just get familiar with the ideas until a centered-log-ratio is implemented. The reason relative abundance isn't great for networks is that OTU's with large counts produce false correlations due to their predominance. 
+
+###Co-occurrence
+This is an area of networks where we study OTU's in the same environment that "co-occur". First we will filter data by co-occurence. Minimum [recommended](http://journal.frontiersin.org/article/10.3389/fmicb.2014.00219/full) is 20%. 
+
+```r
+#filter OTU's to 50% presence in all samples
+biom_fil=cooccur_filter(biom$RA.otus,co_per=0.5)
+
+#run co-occurence. Taxon can be excluded and identified later if desired.
+biom_netw=cooccurrence(biom_fil,taxon = biom$taxon)
+
+#try plotting the data
+plot(biom_netw$netw)
+```
+
