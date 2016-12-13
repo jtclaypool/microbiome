@@ -53,6 +53,10 @@ biom=read.biom(fir_data,new=F)
 #if file has not been read into R (filepath can be put in directly, "C://users/jtclaypool/Desktop/fir_data.txt"; or using the file.choose() command)
 filepath=file.choose()
 biom=read.biom(filepath, new=T)
+
+#you will also need your metadata file
+filepath=file.choose()
+meta=read.table(filepath,header=T,sep="\t")
 ```
 
 Here we can make our generic barplot of relative abundance. We can also then transform it into something fancier!
@@ -77,4 +81,24 @@ If we don't want to make this graph in R but want to save ourselves some time, w
 write.table(ra_plot$top_wide,"RA table.txt", sep="\t",row.names = T)
 ```
 
+There is a code that does a "wrapper" for VEGAN in R. It will compute various statistics such as NMDS, Shannon's Diversity, and Pielou's Evenness
 
+```r
+veg=vegan_wrapper(biom$RA.Otus,meta = meta,category = "Timepoint")
+
+#again the ggplot2 graph can be edited
+veg$NMDS_plot+
+  theme(legend.title=element_text(),legend.position="right", plot.title = element_text(hjust=0.5))+
+  guides(fill=guide_legend("Timepoint"))+
+  labs(title="Enrichment of microbial communities\non Douglas Fir")
+```
+
+So this is the basic works, but getting into some of the network development, what we are trying to extract is how our microbial community is interacting. 
+<br/>
+There are several ways to produce co-occurrence networks. 
+
+-Pearson Correlations - generate linear relationship between OTU's. This means organisms have to increase and decrease at the same rate to become captured in the network. This can be of relative abundance, raw counts, or transformed data (generally centered-log-transformed)
+-Spearman Correlations - generate rank-based relationships between OTU's. This allows data to increase or decrease together but isn't restricted to linear relationships. This again can be relative abundance, raw counts, or transformed data (generally centered-log-transformed). 
+- Other novel programs exist but will be outside the scope of this package
+  * SparCC
+  * Spiec-Easi (Speak-easy)
