@@ -22,8 +22,6 @@ ZiPi<-function(netw="network",modules="modules"){
     meanZ[i]=mean(module_connections[which(modules==i)])
     sdZ[i]=sd(module_connections[which(modules==i)])
   }
-  print(meanZ)
-  print(sdZ)
   for(i in 1:length(names)){
     Z[i]=(module_connections[i]-meanZ[modules[i]])/sdZ[modules[i]]
 

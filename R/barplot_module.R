@@ -1,15 +1,15 @@
 #'barplot of relative abundance of modules
-barplot.module<-function(data="relative abundance",treatment="treatment metadata",categories="Treatment",walk= "walk"){
+barplot_module<-function(data="relative abundance",meta="treatment metadata",categories="category",niche= "detection algorith"){
   #Relative Abundance Characterization against Network OTU's
   require(reshape)
   require(ggplot2)
   require(RColorBrewer)
-  mean.otus=as.data.frame(aggregate(data,by=list(treatment[,which(colnames(treatment)%in%categories)]),mean))
+  mean.otus=as.data.frame(aggregate(data,by=list(meta[,which(colnames(meta)%in%categories)]),mean))
   rownames(mean.otus)=mean.otus[,1]
   mean.otus=t(mean.otus[,-1])
 
-  colr1=(rownames(mean.otus)%in%walk$names)*1
-  colr1[(1:nrow(mean.otus))[(rownames(mean.otus)%in%walk$names)]]<-walk$membership
+  colr1=(rownames(mean.otus)%in%niche$names)*1
+  colr1[(1:nrow(mean.otus))[(rownames(mean.otus)%in%niche$names)]]<-niche$membership
   colrs=brewer.pal(max(colr1+1),"Set3")[colr1+1]
   #bar=barplot(mean.otus[order(colr1),],col=colrs[order(colr1)],border=NA,las=1)
   #legend(2,115,legend=unique(colr1+1),fill=unique(colrs),horiz=T)

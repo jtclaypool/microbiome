@@ -122,3 +122,85 @@ biom_netw=cooccurrence(biom_fil,taxon = biom$taxon)
 plot(biom_netw$netw)
 ```
 
+###Community Detection
+Now once you've seen your network, you are probably noticing clusters together and maybe that's interesting to you. If so, community detection is next up. This will allow you to find interacting groups of OTU's that may be functioning together in your samples and worth investigating more thoroughly. 
+<br/>
+As always multiple methods exist and most can be found within the igraph package of R. Two review papers comparing community detection algorithms can be found [here](http://www.nature.com/articles/srep02216?WT.ec_id=SREP-631-20130801) and [here](https://arxiv.org/pdf/1206.4987v1.pdf)To list a few algorithms:
+
+- fastgreedy
+  *greedy modularity maximisation
+- infomap
+  *information compression
+- louvain
+  *multilevel modularity maximization
+- walktrap
+  * uses small random walks to identify most likely neighbors
+- walktrap (modularity optimized - this package)
+  * same as walktrap but optimizes based on modularity
+  
+Each one of these algorithms can utilize the network you just created to detect these community niches. 
+
+```r
+#infomap community detection. Try the different detection algorithms to understand how different your niches might be broken up
+biom_info=infomap.community(biom_netw$netw)
+
+#now add some color to your previous plot
+plot(biom_netw$netw,vertex.color=as.factor(biom_info$membership))
+
+#and to understand how these communities are present in your overall community
+#this may show a warning message if the community modules/clusters exceed 13. This is just because of lacking a distinct palette color for each cluster. It may also be harder to interpret yourself. 
+plot_module=barplot_module(data=biom$RA.Otus,niche = biom_info,meta = meta,categories = "Timepoint")
+plot_module$plot
+```
+###Keystone Microbes
+Next we'll try and find some keystone microbes (if there are some!). This is largely built on heuristics from modularity of [bee pollination networks](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2148393/). Nevertheless it is the gold-standard at the moment. Keystone are identified as either:
+ - Hub: forms a dense set of network connections within its own module such that the disappearance of such OTU may signify large changes for module structure or module collapse 
+ - Connector: Is largely connected to many different modules bringing together many different microbial niches. The disappearance of these OTU's may remove the ability of the niches to function together in the same environment
+
+```r
+#this is passed our network information and module membership information. Because of an iterative process, this can sometimes take a little bit to work
+biom_zipi=ZiPi(biom_netw$netw,modules=biom_info$membership)
+
+#this can be visualized as such. Sorry I haven't put a code for this yet but you get the table to plot with it as you will or export it to excel if you desire. 
+par(xpd=F)
+plot(biom_zipi$P,biom_zipi$Z,
+     ylim = c(-3.5,3),
+     ylab="Zi",
+     xlab="Pi")
+#connectors are defined as having a Pi value > 0.62
+abline(v=0.62)
+#hubs are defined as having a Zi value > 2.5
+abline(h=2.5)
+
+#we will color any hubs or connectors red
+points(biom_zipi$P[biom_zipi$P>=0.62],biom_zipi$Z[biom_zipi$P>=0.62],col="red",pch=1)
+points(biom_zipi$P[biom_zipi$Z>=2.5],biom_zipi$Z[biom_zipi$Z>=2.5],col="red",pch=1)
+```
+###Community Connects to the output
+Here we will use ModuleEigengenes from the WGCNA package in R. WGCNA will require several installations from the Bioconductor site. This was developed to link genetic studies to diseases and conditions in the medical field. While WGCNA has their own community detection algorith embedded, this wrapper allows us to substitute our own and establish correlation between our detected communities and variables we've recored. The output is ready to be plotted with ggplot2. 
+
+```r
+#first we call the function to establish the relationships. 
+biom_eigen=eigen_correlation(biom$RA.Otus[-c(5,8),],community = biom_info,metadata = meta[-(1:2),],categories = c("Xylanase.IU.g.dry.matter","Endoglucanase.IU..g.dry.matter","cCER"))
+
+#from there we can plot these correlations in a heatmap to visualize the relationship. 
+ggplot(data=biom_eigen$melt_cor,aes(x=as.factor(variable), y=category,fill=value))+
+  geom_tile(colour="#B8B8B8")+
+  #geom_text(aes(label=value))+
+  scale_fill_gradient2("Degreee of \n Correlation",guide = "colourbar",high = "#7DEB5F",mid="#F0EE54",low="#F3633F",na.value="white",limits=c(-0.75,0.75))+ 
+  ylab("")+
+  xlab("Cluster/Module")+
+  labs(fill="Cluster to Deconstruction")+
+  scale_y_discrete(labels=c("Xylanase","Endoglucanase","cCER"))
+  
+#we should probably filter on significance though
+ggplot(data=biom_eigen$melt_cor,aes(x=as.factor(variable), y=category,fill=ifelse(pval<=0.1,value,NA)))+
+  geom_tile(colour="#B8B8B8")+
+  #geom_text(aes(label=value))+
+  scale_fill_gradient2("Degreee of \n Correlation",guide = "colourbar",high = "#7DEB5F",mid="#F0EE54",low="#F3633F",na.value="white",limits=c(-0.75,0.75))+ 
+  ylab("")+
+  xlab("Cluster/Module")+
+  labs(fill="Cluster to Deconstruction")+
+  scale_y_discrete(labels=c("Xylanase","Endoglucanase","cCER"))
+```
+
