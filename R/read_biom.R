@@ -28,5 +28,5 @@ read.biom<-function(biom="biom",new=T){
   per.trial=sweep(biom.trim,2,col.sums,"/")
   per.trial=as.data.frame(t(per.trial)*100)
 
-  return(list("RA.Otus"=per.trial.trim,"taxon"=taxon,"biom_tab"=biom_tab))
+  return(list("RA.Otus"=per.trial,"taxon"=taxon,"biom_tab"=biom_tab))
 }

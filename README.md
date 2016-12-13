@@ -20,6 +20,10 @@ Once installed, you'll need to use that package to install this one.
 ```r
 library(devtools)
 install_github("jtclaypool/microbiome")
+#missing dependencies may need to be installed from Bioconductor
+#install missing packages by (for preprocessCore):
+#source("https://bioconductor.org/biocLite.R")
+#biocLite("preprocessCore")
 ```
 
 
@@ -49,6 +53,28 @@ biom=read.biom(fir_data,new=F)
 #if file has not been read into R (filepath can be put in directly, "C://users/jtclaypool/Desktop/fir_data.txt"; or using the file.choose() command)
 filepath=file.choose()
 biom=read.biom(filepath, new=T)
+```
+
+Here we can make our generic barplot of relative abundance. We can also then transform it into something fancier!
+
+```r
+ra_plot=barplot_RA(biom$RA.Otus,tax = biom$taxon,meta = meta,category = "Timepoint")
+#plot is stored in list variable RA_plot
+#RA_plot is a ggplot2 object and can be manipulated according to make publication ready graph
+#for example adding an x-axis label and changing the legend title
+
+ra_plot$RA_plot+
+  scale_x_discrete("Timepoint")+
+  theme(legend.title=element_text(),legend.position="right",plot.title = element_text(hjust=0.5))+
+  guides(fill=guide_legend("Phylum"))+
+  labs(title="Enrichment of microbial communities\non Douglas Fir")
+```
+
+If we don't want to make this graph in R but want to save ourselves some time, we can export the relative abundance data for use in a spreadsheet program. 
+
+```r
+#this will write it to your current working directory. The name in quotations will be the final name of the file
+write.table(ra_plot$top_wide,"RA table.txt", sep="\t",row.names = T)
 ```
 
 
