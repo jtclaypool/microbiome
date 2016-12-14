@@ -113,7 +113,7 @@ This is an area of networks where we study OTU's in the same environment that "c
 
 ```r
 #filter OTU's to 50% presence in all samples
-biom_fil=cooccur_filter(biom$RA.Otus,co_per=0.5)
+biom_fil=cooccur_filter(RA=biom$RA.Otus,co_per=0.5)
 
 #run co-occurence. Taxon can be excluded and identified later if desired.
 biom_netw=cooccurrence(biom_fil,taxon = biom$taxon)
