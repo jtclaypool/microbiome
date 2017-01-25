@@ -8,7 +8,6 @@ barplot_module<-function(data="relative abundance",meta="treatment metadata",cat
   mean.otus = as.data.frame(aggregate(data, by = list(meta[,which(colnames(meta) %in% categories)]), mean))
   rownames(mean.otus) = mean.otus[, 1]
   mean.otus = t(mean.otus[, -1])
-  sum(!is.na(match(rownames(mean.otus),niche$names))
   colr1=niche$membership[match(rownames(mean.otus),niche$names)]
   colr1[is.na(colr1)] <- 0
   colrs=brewer.pal(max(colr1+1),"Set3")[colr1+1]
