@@ -11,7 +11,7 @@ barplot_module<-function(data="relative abundance",meta="treatment metadata",cat
   colr1=niche$membership[match(rownames(mean.otus),niche$names)]
   colr1[is.na(colr1)] <- 0
   colrs=brewer.pal(max(colr1+1),"Set3")[colr1+1]
-  ggOTUs=cbind.data.frame(mean.otus,"Cluster"=paste(rep("Cluster",times=length(colr1)),colr1))
+  ggOTUs=cbind.data.frame(mean.otus,"Cluster"=paste(rep("Cluster",times=length(colr1)),(colr1-1)))
   levels(ggOTUs$Cluster)[1]="No Cluster"
   bar_data=melt(ggOTUs,id="Cluster")
   bar_data=bar_data[order(bar_data$Cluster),]
