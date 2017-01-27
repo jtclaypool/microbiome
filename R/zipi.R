@@ -9,8 +9,8 @@ ZiPi<-function(netw="network",modules="modules"){
   Z=c()
   P=c()
   for(i in 1:length(names)){
-    total_connections[i]=sum(netw[i])
-    module_connections[i]=sum(netw[i][which(modules==modules[i])])
+    total_connections[i]=sum(netw[i]>0)
+    module_connections[i]=sum(netw[i][which(modules==modules[i])]>0)
     KitKi=c()
     for(j in 1:length(unique(modules))){
       KitKi[j]=((sum(netw[i][which(modules==j)]))/total_connections[i])^2
