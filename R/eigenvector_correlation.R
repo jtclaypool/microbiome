@@ -6,8 +6,7 @@ eigen_correlation<-function(data="relative abundance",community="community detec
   require(WGCNA)
   require(reshape)
   data.netw=data[,which(names(data)%in%community$names)]
-  community_ord=community$membership[match(colnames(data),community$names)]
-  community_ord=community_ord[!is.na(community_ord)]
+  community_ord=community$membership[match(colnames(data.netw),community$names)]
   ME=moduleEigengenes(data.netw,colors=community$membership)
   corr=data.frame(matrix(0,ncol=length(unique(community_ord)),nrow = length(categories)))
   names(corr)<-sort(unique(community$membership),decreasing = F)
