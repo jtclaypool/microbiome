@@ -1,7 +1,7 @@
 #'
 #' #Read in biom file and return relative abundance
 read.biom<-function(biom="biom",new=T,metagenome=F){
-  if(new){biom <- read.table(biom,header=T,sep="\t",comment.char="",skip=1)}
+  if(new & !metagenome){biom <- read.table(biom,header=T,sep="\t",comment.char="",skip=1)}
   if(new && metagenome){biom <- read.table(biom,header=T,sep="\t",comment.char="",skip=1,quote="")}
   #taxonomy and OTU information
   if(!metagenome){
@@ -11,10 +11,10 @@ read.biom<-function(biom="biom",new=T,metagenome=F){
     names(taxon)=c("Kingdom","Phylum","Class","Order","Family","Genus","Species")
     otus=biom[,1]
     taxon=cbind(otus,taxon)
-    rownames(biom) <- otus
   }
 
   #remove taxonomy column
+  rownames(biom) <- biom[,1]
   biom=biom[,-(c(1,ncol(biom)))]
 
   #remove singletons and OTU's with no counts
