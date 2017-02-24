@@ -23,7 +23,7 @@ read.biom<-function(biom="biom",new=T,metagenome=F){
   biom.trim=biom[-(which(rowSums(biom)==0)),]
 
   #create general tab-delimited file with taxonomy attached
-  biom_tab=cbind.data.frame(biom.trim,taxon[,-1])
+  if(!metagenome){biom_tab=cbind.data.frame(biom.trim,taxon[,-1])}
 
 
   #Convert to relative abundance
