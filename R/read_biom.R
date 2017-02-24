@@ -19,7 +19,7 @@ read.biom<-function(biom="biom",new=T,metagenome=F){
 
   #remove singletons and OTU's with no counts
   biom[biom==1]<-0
-  taxon=taxon[-(which(rowSums(biom)==0)),]
+  if(!metagenome){taxon=taxon[-(which(rowSums(biom)==0)),]}
   biom.trim=biom[-(which(rowSums(biom)==0)),]
 
   #create general tab-delimited file with taxonomy attached
