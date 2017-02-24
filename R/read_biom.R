@@ -2,7 +2,7 @@
 #' #Read in biom file and return relative abundance
 read.biom<-function(biom="biom",new=T,metagenome=F){
   if(new){biom <- read.table(biom,header=T,sep="\t",comment.char="",skip=1)}
-  if(new & metgenome){biom <- read.table(biom,header=T,sep="\t",comment.char="",skip=1,quote="")}
+  if(new & metagenome){biom <- read.table(biom,header=T,sep="\t",comment.char="",skip=1,quote="")}
   #taxonomy and OTU information
   if(!metagenome){
     taxon=biom$ConsensusLineage
