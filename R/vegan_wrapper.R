@@ -16,8 +16,8 @@ vegan_wrapper <- function(RA="relative abundance",meta="metadata",category="cate
   nmds_dat=as.data.frame(NMDS$points)
   if(labels){nmds_dat=nmds_dat[match(meta[,1],rownames(nmds_dat)),]}
   NMDS_plot <- ggplot(data = nmds_dat,aes(x=MDS1,y=MDS2))+
-    geom_polygon(data=nmds_dat,aes(fill=meta[,category]))+
-    geom_point(aes(fill=meta[,category]))
+    geom_polygon(data=nmds_dat,aes(fill=as.factor(meta[,category])))+
+    geom_point(aes(fill=as.factor(meta[,category])))
 
 
     return(list("shannon"=div_cat,"pielou"=pie_cat,"NMDS"=NMDS,"NMDS_plot"=NMDS_plot))
