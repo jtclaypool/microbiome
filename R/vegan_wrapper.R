@@ -1,6 +1,6 @@
 #NMDS wrapper
 vegan_wrapper <- function(RA="relative abundance",meta="metadata",category_1="category",category_2=NA,labels=T){
-  div=diversity(RA,index="shannon")
+  div=vegan::diversity(RA,index="shannon")
   if(labels){div=div[match(meta[,1],names(div))]}
   #average Shannon index by desired metadata information
   if(!is.na(category_2)){
