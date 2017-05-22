@@ -9,8 +9,8 @@ vegan_wrapper <- function(RA="relative abundance",meta="metadata",category_1="ca
     div_cat=tapply(div,list(meta[,category_1],meta[,category_2]),mean)
   }
   else{
-    category=which(colnames(meta)%in%category)
-    div_cat=tapply(div,meta[,category],mean)
+    category_1=which(colnames(meta)%in%category_1)
+    div_cat=tapply(div,meta[,category_1],mean)
   }
   #average Pielou's evenness
   pielou=div/log(specnumber(RA))
@@ -19,7 +19,7 @@ vegan_wrapper <- function(RA="relative abundance",meta="metadata",category_1="ca
     pie_cat=tapply(pielou,list(meta[,category_1],meta[,category_2]),mean)
   }
   else{
-    pie_cat=tapply(pielou,meta[,category],mean)
+    pie_cat=tapply(pielou,meta[,category_1],mean)
   }
 
 
