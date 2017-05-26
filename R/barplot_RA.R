@@ -1,3 +1,4 @@
+#now adding JESUS
 #need to remove last row from dat!!!!!!!!!!!!!!!!
 barplot_RA <- function(RA="relative abundance",tax="taxonomy",level="Phylum",top=7,meta="metadata",category="metadata category",labels=T){
   #find column number associated with desired level of information
