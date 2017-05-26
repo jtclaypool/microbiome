@@ -1,9 +1,9 @@
 Package: microbiome
 Title: suite of functions for creating networks and processing microbiome data
-Version: 0.0.0.9000
+Version: 0.9.0.0000
 Authors@R: person("Joshua", "Claypool", email = "jtclaypool@ucdavis.edu", role = c("aut", "cre"))
 Description: What the package does (one paragraph).
 Depends: R (>= 3.1.3), igraph, Hmisc, reshape, ggplot2, RColorBrewer,vegan
-License: What license is it under?
+License: GNU GPL-3.0
 Encoding: UTF-8
 LazyData: true
