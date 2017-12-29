@@ -5,7 +5,7 @@ read.biom<-function(biom="biom",new=T,metagenome=F){
   if(new && metagenome){biom <- read.table(biom,header=T,sep="\t",comment.char="",skip=1,quote="")}
   #taxonomy and OTU information
   if(!metagenome){
-    taxon=biom$ConsensusLineage
+    taxon=biom[,ncol(biom)]
     taxon=do.call("rbind",strsplit(as.character(taxon),';'))
     taxon=data.frame(apply(taxon,2,as.character))
     names(taxon)=c("Kingdom","Phylum","Class","Order","Family","Genus","Species")
