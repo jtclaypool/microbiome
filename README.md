@@ -85,7 +85,7 @@ write.table(ra_plot$top_wide,"RA table.txt", sep="\t",row.names = T)
 There is a code that does a "wrapper" for VEGAN in R. It will compute various statistics such as NMDS, Shannon's Diversity, and Pielou's Evenness
 
 ```r
-veg=vegan_wrapper(biom$RA.Otus,meta = meta,category = "Timepoint")
+veg=vegan_wrapper(biom$RA.Otus,meta = meta,category_1 = "Timepoint")
 
 #again the ggplot2 graph can be edited
 veg$NMDS_plot+
